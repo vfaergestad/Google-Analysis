@@ -4,7 +4,7 @@ import json
 
 POSITION_DATA = "D:/Biblioteker/Dokumenter/gdata/Takeout/Posisjonslogg/Posisjonslogg.json"
 
-conn = sqlite3.connect("takeout.db")
+conn = sqlite3.connect("D:/Biblioteker/Dokumenter/GitHub/Google-Analysis/takeout.db")
 c = conn.cursor()
 
 
@@ -17,7 +17,7 @@ def make_table():
 def position_data():
     data = json.load((open(POSITION_DATA)))
 
-    for item in data['locations']:
+    for item in tqdm(data['locations']):
         try:
             timestamp = int(item['timestampMs'])
             latitude = item['latitudeE7']
@@ -42,7 +42,7 @@ def position_data():
                 vertical_accuracy = item['verticalAccuracy']
             else:
                 vertical_accuracy = 0
-        
+
             c.execute("INSERT INTO position_data (unix, latitude, longitude, accuracy, velocity, heading, "
                       "altitude, vertical_accuracy) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (timestamp, latitude, longitude,
                                                                                        accuracy, velocity,
