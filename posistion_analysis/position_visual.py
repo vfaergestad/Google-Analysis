@@ -1,6 +1,7 @@
 import sqlite3
 from tqdm import tqdm
 from collections import Counter
+from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 from matplotlib import style
 import numpy as np
@@ -12,7 +13,7 @@ conn = sqlite3.connect("D:/Biblioteker/Dokumenter/GitHub/Google-Analysis/takeout
 c = conn.cursor()
 
 
-def position_visual():
+def get_data():
     SAVE_DIR = "images/images_1day_graph"
 
     c.execute("SELECT max(unix) FROM position_data")
@@ -31,5 +32,18 @@ def position_visual():
 
 
 
+def draw_visual():
+    m = Basemap(projection="mill",
+                llcrnrlat=59.854421,
+                llcrnrlon=11.152113,
+                urcrnrlat=60.013646,
+                urcrnrlon=11.674688,
+                resolution="c")
+    m.drawrivers()
+    m.bluemarble()
 
-position_visual()
+
+
+    plt.show()
+
+draw_visual()
