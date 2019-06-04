@@ -9,26 +9,24 @@ from datetime import datetime
 
 style.use("ggplot")
 
-conn = sqlite3.connect("D:/Biblioteker/Dokumenter/GitHub/Google-Analysis/takeout.db")
+conn = sqlite3.connect("takeout.db")
 c = conn.cursor()
 
 
 def get_data():
     SAVE_DIR = "images/images_1day_graph"
 
-    c.execute("SELECT max(unix) FROM position_data")
-    max_time = c.fetchall()[0][0]
-
-    c.execute("SELECT min(unix) FROM position_data")
-    min_time = c.fetchall()[0][0]
-
-    counter = 0
-
-    c.execute(f"SELECT longitude, latitude FROM position_data WHERE unix > {START} and unix < {END}")
+    c.execute("SELECT longitude, latitude, unix FROM position_data")
     data = c.fetchall()
 
+    position = list(data)
+    for x in position:
+        del position[x][2]
 
-    position = [i for i in data]
+    print(data[1])
+    print(position[1])
+    print(position[len(position) - 1])
+
 
 
 
