@@ -28,8 +28,6 @@ def get_data():
     print(position[len(position) - 1])
 
 
-
-
 def draw_visual():
     m = Basemap(projection="mill",
                 llcrnrlat=59.854421,
